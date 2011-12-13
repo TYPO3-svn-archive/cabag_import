@@ -1,0 +1,45 @@
+now:
+----
+
+* if .value is not set within the conf all fieldProcs should take $this->currentFieldValue, otherwise it's not possible to stack the fieldProcs
+
+* rename db to storage and make it dynamicaly loadable
+
+* create new storage which works only with sql
+
+* bug im transform fixen
+
+* new image fieldproc
+	1 = preg_replace
+	1 {
+		value ={$id}
+		fromt = /^([0-9]{4}).*/
+		to = $1
+	}
+	2 = files
+	2 {
+		preg_match = /.*{$currentValue}[^\/]*.jpg/
+		sourceFolder = fileadmin/user_upload/shop_images/
+		destinationFolder = uploads/tx_cabagshop/
+		recursive = 1
+		rename = {$currentValue}-{$number}.jpg
+	}
+
+
+
+later:
+------
+* test the cli script why the overwriteConf functionality fails. Something with the eval is wrong.
+* import without pid should be possible if special config value is set
+* clean up backend module, make it configurabel
+* throw exceptions with row number
+* restructure "source_file" class
+	1.) constructure has to check everything
+	2.) main will open everything
+	3.) close function will close and archive everything
+		-> call by handler when everything worked
+* load source dynamicaly as fieldprocs are loaded
+* try and catch just where usefull
+* check configuration settings with if statements where you need them and not in a central foreach (especially in source classe)
+* interprets dynamic loading
+* speed optimization for the constant replacement

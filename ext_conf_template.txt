@@ -1,0 +1,5 @@
+  # cat=basic//10; type=int; label= Amount of error messages.
+maxerrormessages = 500
+
+  # cat=basic//10; type=string; label=Memory Limit (ex. '1024M')
+memoryLimit = 
