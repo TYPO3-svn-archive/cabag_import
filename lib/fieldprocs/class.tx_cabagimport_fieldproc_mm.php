@@ -57,9 +57,13 @@ class  tx_cabagimport_fieldproc_mm implements tx_cabagimport_ifieldproc  {
 		
 		// save the handler object
 		$this->objectHandler = $object_handler;
-		
+
+		if (isset($this->conf['split.']['newline']) && $this->conf['split.']['newline']) {
+			$this->conf['split'] = "\n";
+		}
+
 		// split the value
-		if(!empty($this->conf['split'])) {
+		if(strlen($this->conf['split']) > 0) {
 			$referenceRecords = t3lib_div::trimExplode($this->conf['split'],$this->objectHandler->currentFieldValue, 1);
 		} else {
 			// default split setting is komma

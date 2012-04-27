@@ -65,6 +65,20 @@ class  tx_cabagimport_fieldproc_copypage implements tx_cabagimport_ifieldproc {
 			if ($destinationPID && $sourcePID) {
 				$cmd['pages'][$sourcePID]['copy'] = $destinationPID;
 
+				if (!empty($this->conf['dontCopyPageIfRecordFound'])) {
+					$selectRes = $GLOBALS['TYPO3_DB']->sql_query($this->conf['dontCopyPageIfRecordFound']);
+					if($GLOBALS['TYPO3_DB']->sql_num_rows($selectRes) > 0) {
+						
+						if($TYPO3_CONF_VARS['SYS']['enable_DLOG']) {
+							t3lib_div::devLog('Do not copy page because sendIfNoResultSQLSelect returned record', 'cabag_import', -1, $GLOBALS['TYPO3_DB']->sql_fetch_row($selectRes));
+						}
+						
+						// stop creating page if record found
+						$object_handler->currentFieldValue = 0;
+						return FALSE;
+					}
+				}
+
 				$tce = t3lib_div::makeInstance('t3lib_TCEmain');
 				$tce->copyTree = intval($this->conf['copyTree']);
 				$tce->stripslashes_values = 0;
@@ -75,7 +89,13 @@ class  tx_cabagimport_fieldproc_copypage implements tx_cabagimport_ifieldproc {
 					$tce->clear_cacheCmd('pages');
 				}
 
-				$object_handler->setMessage('Page copied from ' . $sourcePID . ' to ' . $destinationPID);
+				if (isset($tce->copyMappingArray_merged['pages'][$sourcePID])) {
+					$object_handler->currentFieldValue = $tce->copyMappingArray_merged['pages'][$sourcePID];
+				} else {
+					$object_handler->currentFieldValue = 0;
+				}
+
+				$object_handler->setMessage('Page copied from ' . $sourcePID . ' to ' . $destinationPID . '. New PID is: ' . $object_handler->currentFieldValue);
 			} else {
 				return FALSE;
 			}

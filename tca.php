@@ -602,6 +602,9 @@ Your cabag_import
 				# split value for relation
 				split = ,
 				
+				# split alternative for newline
+				split.newline = 1
+				
 				# possibility to restrict the relation to a position within 
 				# the value
 				splitUseOnlyPosition = 1

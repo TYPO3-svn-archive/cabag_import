@@ -1,3 +1,16 @@
+12-03-12 - Dimitri Koenig <dk@cabag.ch>
+	* version 1.3.3
+	* fixed bug in ext_tables.sql so that TYPO3's install tool runs smoothly
+
+12-02-01 - Dimitri Koenig <dk@cabag.ch>
+	* version 1.3.2
+	* copypage fieldproc returns new pid of page
+	* copypage fieldproc has additional sql check feature
+
+12-02-01 - Dimitri Koenig <dk@cabag.ch>
+	* version 1.3.1
+	* added split.newline = 1 to mm_relation fieldproc
+
 11-11-24 - Tizian Schmidlin <st@cabag.ch>
 	* version 1.3.0
 	* fieldprocs/mm: added the following on line 94 at class.tx_cabagimport_fieldproc_mm.php:
